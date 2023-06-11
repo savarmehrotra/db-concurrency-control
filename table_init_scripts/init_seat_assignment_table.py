@@ -1,12 +1,13 @@
 from utils.db_connector import DBConnector
 
 
-def init_seat_assignment_table():
+def init_optimistic_locking_seat_assignment_table():
     create_table_query = """
-    CREATE TABLE IF NOT EXISTS seats (
+    CREATE TABLE IF NOT EXISTS assingments_optimistic (
         seat_id INT PRIMARY KEY,
         seat_number VARCHAR(10) NOT NULL,
         seat_status ENUM('available', 'booked') NOT NULL DEFAULT 'available',
+        version INT,
         user_id INT,
     )
     """
@@ -18,15 +19,15 @@ def init_seat_assignment_table():
     insert_rows_query = """
     INSERT INTO seats (seat_id, seat_number, seat_status, user_id)
     VALUES
-        (1, 'A1', 'available', NULL),
-        (2, 'A2', 'available', NULL),
-        (3, 'A3', 'booked', 123),
-        (5, 'B1', 'booked', 356),
-        (6, 'B2', 'booked', 489),
-        (7, 'B3', 'available', NULL),
-        (8, 'C1', 'available', NULL),
-        (9, 'C2', 'available', NULL),
-        (10, 'C3', 'available', NULL)
+        (1, 'A1', 'available', 1, NULL),
+        (2, 'A2', 'available', 1, NULL),
+        (3, 'A3', 'booked', 1, 123),
+        (5, 'B1', 'booked', 1, 356),
+        (6, 'B2', 'booked', 1, 489),
+        (7, 'B3', 'available', 1, NULL),
+        (8, 'C1', 'available', 1, NULL),
+        (9, 'C2', 'available', 1, NULL),
+        (10, 'C3', 'available', 1, NULL)
     """
 
     # Execute the insert rows query
@@ -38,4 +39,4 @@ def init_seat_assignment_table():
 
 
 # Create the table and insert sample rows.
-init_seat_assignment_table()
+init_optimistic_locking_seat_assignment_table()
