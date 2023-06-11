@@ -1,9 +1,14 @@
 from utils.db_connector import DBConnector
 
 
-def init_optimistic_locking_seat_assignment_table():
+def init_seat_assignments_table():
+    """
+    Initializes a Sample Table.
+    Important : Version is being used to support optimistic locking.
+    """
+
     create_table_query = """
-    CREATE TABLE IF NOT EXISTS assignments_optimistic (
+    CREATE TABLE IF NOT EXISTS seat_assignments (
         seat_id INT PRIMARY KEY,
         seat_number VARCHAR(10) NOT NULL,
         seat_status ENUM('available', 'booked') NOT NULL DEFAULT 'available',
@@ -17,7 +22,7 @@ def init_optimistic_locking_seat_assignment_table():
     cursor.execute(create_table_query)
 
     insert_rows_query = """
-    INSERT INTO seats (seat_id, seat_number, seat_status, user_id)
+    INSERT INTO seat_assignments (seat_id, seat_number, seat_status, user_id)
     VALUES
         (1, 'A1', 'available', 1, NULL),
         (2, 'A2', 'available', 1, NULL),
@@ -30,13 +35,9 @@ def init_optimistic_locking_seat_assignment_table():
         (10, 'C3', 'available', 1, NULL)
     """
 
-    # Execute the insert rows query
     cursor.execute(insert_rows_query)
-
-    # Commit the changes and close the database connection
     db_connection.commit()
     db_connection.close()
 
 
-# Create the table and insert sample rows.
-init_optimistic_locking_seat_assignment_table()
+init_seat_assignments_table()
