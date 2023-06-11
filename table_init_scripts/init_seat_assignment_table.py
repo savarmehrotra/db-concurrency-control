@@ -3,7 +3,7 @@ from utils.db_connector import DBConnector
 
 def init_optimistic_locking_seat_assignment_table():
     create_table_query = """
-    CREATE TABLE IF NOT EXISTS assingments_optimistic (
+    CREATE TABLE IF NOT EXISTS assignments_optimistic (
         seat_id INT PRIMARY KEY,
         seat_number VARCHAR(10) NOT NULL,
         seat_status ENUM('available', 'booked') NOT NULL DEFAULT 'available',

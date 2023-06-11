@@ -1,3 +1,4 @@
+from display_table import display_table
 from utils.db_connector import DBConnector
 
 
@@ -43,6 +44,7 @@ def assign_seat_optimistic(user_id, seat_number):
 
 
 # Accept user input for user ID and seat number
+display_table("assignments_optimistic")
 user_id = input("Enter user ID: ")
 seat_number = input("Enter seat number: ")
 assign_seat_optimistic(user_id, seat_number)
